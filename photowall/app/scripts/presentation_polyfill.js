@@ -3,6 +3,7 @@
  * @author jonlau@google.com (Jonathan Lau)
  */
 
+console.error("PP before scope");
 console.log("presentation polyfill before scope");
 (() => {
 
