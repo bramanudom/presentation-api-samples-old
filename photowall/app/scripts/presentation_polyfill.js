@@ -3,7 +3,7 @@
  * @author jonlau@google.com (Jonathan Lau)
  */
 
-console.log("presentation polyfill before scope")
+console.log("presentation polyfill before scope");
 (() => {
 
   'use strict';
