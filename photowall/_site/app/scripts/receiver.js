@@ -3,8 +3,8 @@
  * launched via the Presentation API.
  * @author jonlau@google.com (Jonathan Lau)
  */
+
 (function() {
-  document.getElementById("appMessage").innerHTML = "sanity checking";
 
   /**
    * Keeps track of the current state of the slideshow:
@@ -48,18 +48,11 @@
    */
   var addConnection = function(connection) {
     // Send the state of the slideshow through the connection.
-    // sendMessage(connetion,slideshow);
-
-
-    document.getElementById("appMessage").innerHTML = "addConnectionCalled";
-
-
     connection.onconnect = function() {
       sendMessage(connection, slideshow);
     };
     connection.onmessage = function(e) {
       var jsonMessage = JSON.parse(e.data);
-      console.log(jsonMessage);
       switch (jsonMessage.action) {
         case photowall.SlideshowAction.ADD_IMAGE:
           addImage(jsonMessage.data);
@@ -86,8 +79,6 @@
    * @param {Object} image Object representation of the image.
    */
   var addImage = function(image) {
-    console.log("add message was called in receiver.js");
-
     // Attach an ID to the image.
     image.id = getImageId();
     // Push image to slideshow.
@@ -157,13 +148,10 @@
    * @param {(string|Object)} message Message to be sent.
    */
   var sendMessage = function(connection, message) {
-
     if (typeof message == 'object') {
       message = JSON.stringify(message);
     }
-
     connection.send(message);
-    console.log("send message was called in receiver.js");
   };
 
   /**
@@ -173,11 +161,9 @@
    * @param {(string|Object)} message Message to be sent.
    */
   var broadcastMessage = function(message) {
-
     navigator.presentation.receiver.connectionList.then(function(list) {
       list.connections.map(function(connection) {
         sendMessage(connection, message);
-        console.log("a message was broadcasted in receiver.js");
       });
     });
   };

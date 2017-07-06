@@ -19,7 +19,6 @@ Example:
 
 <dom-module id="presentation-api">
   <script>
-  console.log("sanity checking console logging");
     Polymer({
       is: 'presentation-api',
 
@@ -86,9 +85,7 @@ Example:
        */
       join: function() {
         var that = this;
-        console.log("we're in the join function!");
-
-        if (this.isConnected) {;
+        if (this.isConnected) {
           // Already connected, abort remaining steps.
           return;
         }
@@ -99,8 +96,6 @@ Example:
           // Update the state of the presentation connection and fire events.
           if (presentationConnection.state == 'connected') {
             that._setIsConnected(true);
-            console.log("the presentation state is now connected!");
-
             that.fire('connect');
           }
           presentationConnection.onconnect = function() {
@@ -121,8 +116,6 @@ Example:
           presentationConnection.onmessage = function(e) {
             // Fire an event with the contents of the message.
             that.fire('message', e.data)
-            console.log("this message has been fired");
-
           };
         });
       },
@@ -163,10 +156,7 @@ Example:
             message = JSON.stringify(message);
           }
           // Sends the message through the presentation connection.
-
           this._presentationConnection.send(message);
-          console.log(message);
-          console.log("a message has been sent through the presentation");
         }
       }
 

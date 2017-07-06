@@ -6,8 +6,7 @@
 (function(document) {
   'use strict';
 
-  //var app = document.querySelector('#app');
-  const app = document.getElementById('app');
+  var app = document.querySelector('#app');
 
   /**
    * Keeps track of the state of the slideshow.
@@ -108,21 +107,15 @@
         // paper-dialog and not from one of its children.
         if (e.target == dialog) {
           dialog.querySelector('[autofocus]').focus();
-          if(app){
-            console.log("the app exists now and it is: " + app);
-            if(app.$.main){
-              console.log("the app's main now exists and it is" + app.$.main);
-              app.$.main.setAttribute('aria-hidden', true);
-              app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
-                  .forEach(function(el) {
-                el.tabIndex = -1;
-              });
-            }
-          }
+          app.$.main.setAttribute('aria-hidden', true);
+          app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
+              .forEach(function(el) {
+            el.tabIndex = -1;
+          });
         }
       });
       dialog.addEventListener('iron-overlay-closed', function(e) {
-        if (e.target == dialog && app.$.main) {
+        if (e.target == dialog) {
           app.$.main.setAttribute('aria-hidden', false);
           app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
               .forEach(function(el) {
