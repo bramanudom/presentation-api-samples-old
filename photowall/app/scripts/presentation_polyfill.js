@@ -3,7 +3,6 @@
  * @author jonlau@google.com (Jonathan Lau)
  */
 
-console.log("presentation polyfill before scope");
 (() => {
 
   'use strict';
@@ -132,39 +131,31 @@ console.log("presentation polyfill before scope");
       let connectionListResolved = false;
       window.addEventListener('message', e => {
         const message = e.data;
-        console.log("this is the message" + message);
-        console.log("this is the message's data" + message.data);
         switch (message.type) {
           case 'NEW_CONNECTION':
-            console.log("we are in the case NEW_CONNECTION");
             const presentationConnection = new PresentationConnection();
             // TODO(jonlau): Set the id of the presentation connection.
             presentationConnection.id = '';
             // Set message origin and source for message channel.
             presentationConnection.messageOrigin_ = e.origin;
             presentationConnection.messageSource_ = e.source;
+            // Populate the connection list.
             connectionList.connections.push(presentationConnection);
             if (!connectionListResolved) {
-              console.log(" case: not resolved");
               connectionListResolved = true;
               resolve(connectionList);
             } else if (connectionList.onconnectionavailable) {
-              console.log("case: resolved");
               // Fire connectionavailable event if the Promise is already
               // resolved with the connection list.
               connectionList.onconnectionavailable(presentationConnection);
             }
-            console.log(connectionList);
             break;
           case 'APP_MESSAGE':
-          console.log("we are in the case APP_MESSAGE");
-          console.log(connectionList);
             connectionList.connections.forEach(connection => {
               if (connection.onmessage) {
                 connection.onmessage(
                     new MessageEvent('message', {data: message.data})
                 );
-
               }
             });
             break;
@@ -173,7 +164,6 @@ console.log("presentation polyfill before scope");
     });
 
   };
-
 
   /**
    * Interface to keep track of presentation connections.
@@ -199,10 +189,11 @@ console.log("presentation polyfill before scope");
 
   };
 
-Object.defineProperty(navigator, 'presentation', {value: {receiver: new PresentationReceiver()}});
-console.log ("this is the presentation: "  + navigator.presentation);
-console.log("this is the receiver: " + navigator.presentation.receiver);
-console.log("this is the connection list: " + navigator.presentation.receiver.connectionList);
-
-
+// Must assign new PresentationReciver object to the navigation.presentation's
+// receiver using the object constructor because both navigation.presentation and
+// navigation.presentation.receiver are readonly attributes.
+Object.defineProperty(navigator,'presentation',
+  {
+    value: {receiver: new PresentationReceiver()},
+  });
 }).call(this);
