@@ -74,6 +74,7 @@
 
     // Add event listener for when a presentation display is connected.
     app.$.presentation.addEventListener('connect', function() {
+      this.fire("NEW_CONECTION");
       app.toast('Connected to a display.');
     });
 

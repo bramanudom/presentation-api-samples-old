@@ -97,10 +97,9 @@ Example:
           // Updates the _presentationConnection property.
           that._set_presentationConnection(presentationConnection);
           // Update the state of the presentation connection and fire events.
-          if (presentationConnection.state == 'connected') {
+          if (presentationConnection.state == 'connected' || presentationConnection.state =='connecting') {
             that._setIsConnected(true);
             console.log("the presentation state is now connected!");
-
             that.fire('connect');
           }
           presentationConnection.onconnect = function() {
@@ -125,6 +124,7 @@ Example:
 
           };
         });
+
       },
 
       /**

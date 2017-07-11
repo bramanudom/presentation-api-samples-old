@@ -3,8 +3,8 @@
  * launched via the Presentation API.
  * @author jonlau@google.com (Jonathan Lau)
  */
+
 (function() {
-  document.getElementById("appMessage").innerHTML = "sanity checking";
 
   /**
    * Keeps track of the current state of the slideshow:
@@ -51,8 +51,6 @@
     // sendMessage(connetion,slideshow);
 
 
-    document.getElementById("appMessage").innerHTML = "addConnectionCalled";
-
 
     connection.onconnect = function() {
       sendMessage(connection, slideshow);
@@ -86,8 +84,6 @@
    * @param {Object} image Object representation of the image.
    */
   var addImage = function(image) {
-    console.log("add message was called in receiver.js");
-
     // Attach an ID to the image.
     image.id = getImageId();
     // Push image to slideshow.

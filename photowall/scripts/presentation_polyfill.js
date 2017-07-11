@@ -16,6 +16,7 @@ console.log("presentation polyfill before scope");
    * @constructor
    */
   const PresentationConnection = function() {
+    console.log("sanity check for presentation Polyfill");
 
     /**
      * Specifies the presentation connection's presentation identifier.
@@ -79,7 +80,6 @@ console.log("presentation polyfill before scope");
   };
 
 
-
   /**
    * Starts closing the presentation connection.
    * https://w3c.github.io/presentation-api/#closing-a-presentationconnection
@@ -132,11 +132,8 @@ console.log("presentation polyfill before scope");
       let connectionListResolved = false;
       window.addEventListener('message', e => {
         const message = e.data;
-        console.log("this is the message" + message);
-        console.log("this is the message's data" + message.data);
         switch (message.type) {
           case 'NEW_CONNECTION':
-            console.log("we are in the case NEW_CONNECTION");
             const presentationConnection = new PresentationConnection();
             // TODO(jonlau): Set the id of the presentation connection.
             presentationConnection.id = '';
@@ -145,26 +142,19 @@ console.log("presentation polyfill before scope");
             presentationConnection.messageSource_ = e.source;
             connectionList.connections.push(presentationConnection);
             if (!connectionListResolved) {
-              console.log(" case: not resolved");
               connectionListResolved = true;
               resolve(connectionList);
             } else if (connectionList.onconnectionavailable) {
-              console.log("case: resolved");
               // Fire connectionavailable event if the Promise is already
               // resolved with the connection list.
               connectionList.onconnectionavailable(presentationConnection);
             }
-            console.log(connectionList);
             break;
           case 'APP_MESSAGE':
-          console.log("we are in the case APP_MESSAGE");
-          console.log(connectionList);
             connectionList.connections.forEach(connection => {
               if (connection.onmessage) {
                 connection.onmessage(
-                    new MessageEvent('message', {data: message.data})
-                );
-
+                    new MessageEvent('message', {data: message.data}));
               }
             });
             break;
@@ -199,10 +189,6 @@ console.log("presentation polyfill before scope");
 
   };
 
-Object.defineProperty(navigator, 'presentation', {value: {receiver: new PresentationReceiver()}});
-console.log ("this is the presentation: "  + navigator.presentation);
-console.log("this is the receiver: " + navigator.presentation.receiver);
-console.log("this is the connection list: " + navigator.presentation.receiver.connectionList);
-
+  navigator.presentation = {receiver:new PresentationReceiver()};
 
 }).call(this);
