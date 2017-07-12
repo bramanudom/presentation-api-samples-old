@@ -189,11 +189,15 @@
 
   };
 
-// Must assign new PresentationReciver object to the navigation.presentation's
-// receiver using the object constructor because both navigation.presentation and
-// navigation.presentation.receiver are readonly attributes.
-Object.defineProperty(navigator,'presentation',
-  {
-    value: {receiver: new PresentationReceiver()},
-  });
+// If the receiver page is launched in the app in 1-UA mode, then there is no
+// need to override the existing definition of navigator.presentation.receiver.
+  if(!navigator.presentation.receiver){
+    // Must assign new PresentationReciver object to the navigation.presentation's
+    // receiver using the object constructor because both navigation.presentation and
+    // navigation.presentation.receiver are readonly attributes.
+    Object.defineProperty(navigator,'presentation',
+      {
+        value: {receiver: new PresentationReceiver()},
+      });
+  }
 }).call(this);
