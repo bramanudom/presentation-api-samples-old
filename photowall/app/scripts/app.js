@@ -2,7 +2,7 @@
  * @fileoverview Main file for the Presentation API slideshow application.
  * @author jonlau@google.com (Jonathan Lau)
  */
-
+console.log("we are in this file");
 (function(document) {
   'use strict';
 

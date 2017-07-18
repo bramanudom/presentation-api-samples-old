@@ -3,7 +3,6 @@
  * launched via the Presentation API.
  * @author jonlau@google.com (Jonathan Lau)
  */
-
 (function() {
 
   /**
@@ -48,9 +47,6 @@
    */
   const addConnection = function(connection) {
     // Send the state of the slideshow through the connection.
-    // sendMessage(connetion,slideshow);
-
-
 
     connection.onconnect = function() {
       sendMessage(connection, slideshow);
