@@ -2,12 +2,10 @@
  * @fileoverview Main file for the Presentation API slideshow application.
  * @author jonlau@google.com (Jonathan Lau)
  */
-console.log("we are in this file");
 (function(document) {
   'use strict';
 
   const app = document.querySelector('#app');
-  // const app = document.getElementById('app');
 
   /**
    * Keeps track of the state of the slideshow.
@@ -74,7 +72,6 @@ console.log("we are in this file");
 
     // Add event listener for when a presentation display is connected.
     app.$.presentation.addEventListener('connect', function() {
-      this.fire("NEW_CONECTION");
       app.toast('Connected to a display.');
     });
 
