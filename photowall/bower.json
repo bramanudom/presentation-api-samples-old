@@ -3,8 +3,8 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.5.2",
-    "iron-elements": "PolymerElements/iron-elements#^2.0.0",
-    "paper-elements": "PolymerElements/paper-elements#^2.0.0",
-    "polymer": "Polymer/polymer#^2.0.0"
+    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
+    "polymer": "Polymer/polymer#^1.2.0"
   }
 }
