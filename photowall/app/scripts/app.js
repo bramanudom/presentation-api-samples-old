@@ -2,11 +2,10 @@
  * @fileoverview Main file for the Presentation API slideshow application.
  * @author jonlau@google.com (Jonathan Lau)
  */
-
 (function(document) {
   'use strict';
 
-  var app = document.querySelector('#app');
+  const app = document.querySelector('#app');
 
   /**
    * Keeps track of the state of the slideshow.
@@ -61,7 +60,7 @@
    * @param {Event} e Event for when an image is clicked.
    */
   app.selectPhoto = function(e) {
-    var photo = e.model.item;
+    const photo = e.model.item;
     app.$.presentation.send({
       action: photowall.SlideshowAction.REMOVE_IMAGE,
       data: photo.id,
@@ -107,15 +106,19 @@
         // paper-dialog and not from one of its children.
         if (e.target == dialog) {
           dialog.querySelector('[autofocus]').focus();
-          app.$.main.setAttribute('aria-hidden', true);
-          app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
-              .forEach(function(el) {
-            el.tabIndex = -1;
-          });
+          if(app){
+            if(app.$.main){
+              app.$.main.setAttribute('aria-hidden', true);
+              app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
+                  .forEach(function(el) {
+                el.tabIndex = -1;
+              });
+            }
+          }
         }
       });
       dialog.addEventListener('iron-overlay-closed', function(e) {
-        if (e.target == dialog) {
+        if (e.target == dialog && app.$.main) {
           app.$.main.setAttribute('aria-hidden', false);
           app.$.main.querySelectorAll(photowall.TABINDEX_SELECTOR)
               .forEach(function(el) {
@@ -146,8 +149,8 @@
     // Add event listener for when the selected item is changed in the
     // slideshow delay listbox.
     app.$.slideshowDelayListbox.addEventListener('iron-activate', function(e) {
-      var prevDelay = app.slideshow.delay;
-      var newDelay = parseInt(e.detail.selected);
+      const prevDelay = app.slideshow.delay;
+      const newDelay = parseInt(e.detail.selected);
       // Update presentation display only if there is a change in delay.
       if (prevDelay != newDelay) {
         app.$.presentation.send({
@@ -161,8 +164,8 @@
     // slideshow animation listbox.
     app.$.slideshowAnimationListbox
         .addEventListener('iron-activate', function(e) {
-      var prevAnimation = app.slideshow.animation;
-      var newAnimation = e.detail.selected;
+      const prevAnimation = app.slideshow.animation;
+      const newAnimation = e.detail.selected;
       // Update presentation display only if there is a change in animation.
       if (prevAnimation != newAnimation) {
         app.$.presentation.send({
